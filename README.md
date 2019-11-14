@@ -1,4 +1,4 @@
-# Employee-Summary
+# Team-Builder
 Software team profiling tool
 
 ## Goal:
