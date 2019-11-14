@@ -45,28 +45,33 @@ async function init() {
 
   // will need to wrap this in a loop for n-employees
   try {
+    // build employee information (i would put this in the Employee object)
     const ansGenEmpl = await askGenEmpl();
     // maybe these should be in the employee class?
     if (test) console.log("try got general:", ansGenEmpl);
 
-    const email = `${ansGenEmpl.lastName}@company.com`;
+    const email = `${ansGenEmpl.first_name[0]}${ansGenEmpl.last_name}@company.com`;
+    const fullName = `${ansGenEmpl.first_name} ${ansGenEmpl.last_name}`;
     // need id generator
     const id = 123;
+
 
     switch (ansGenEmpl.role) {
       case 'Intern':
         ansRoleEmpl = await askIntEmpl();
-        employee = new Intern (ansGenEmpl.name,id,email,ansRoleEmpl.school);
+        employee = new Intern (fullName,id,email,ansRoleEmpl.school);
         break;
       case 'Engineer':
         ansRoleEmpl = await askEngEmpl();
-        employee = new Engineer (ansGenEmpl.name,id,email,ansRoleEmpl.github);
+        employee = new Engineer (fullName,id,email,ansRoleEmpl.github);
         break;
       case 'Manager':
         ansRoleEmpl = await askManEmpl();``
-        employee = new Manager (ansGenEmpl.name,id,email,ansRoleEmpl.officeNumber);
+        employee = new Manager (fullName,id,email,ansRoleEmpl.office);
         break;
     }
+
+    console.log("created new employee",employee);
 
 
     // const page = generateHTML(data, responseArr);
