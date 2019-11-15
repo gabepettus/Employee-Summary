@@ -3,7 +3,6 @@ const inquirer = require("inquirer");
 // const generateHTML = require("./generateHTML");
 
 // load specific employee type classes
-const Employee = require("./lib/Employee")
 const Intern = require("./lib/Intern")
 const Engineer = require("./lib/Engineer")
 const Manager = require("./lib/Manager")
@@ -77,19 +76,21 @@ async function init() {
           break;
       }
 
-      console.log("Created new employee",employee);
+      if (test) console.log(employee);
+      console.log(`Added new employee ${employee.getName()} to team!`);
+      teamList.push(employee);
 
       // can i combine this into one statement
       const askResult = await askAgain();
       again = askResult.again;
 
-      if (test) console.log("again",askResult);
       if (test) console.log("again",again);
     }
-    // const page = generateHTML(data, responseArr);
+    // const page = generateHTML(team);
   } catch (error) {
     console.log(`There was a problem ${error}`);
   }
+  console.log("Team contains",teamList);
 }
 
 init();
