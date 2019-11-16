@@ -1,6 +1,6 @@
 const inquirer = require("inquirer");
 // const fs = require("fs");
-// const generateHTML = require("./generateHTML");
+const generateHTML = require("./lib/generateHTML");
 
 // load specific employee type classes
 const Intern = require("./lib/Intern")
@@ -8,7 +8,7 @@ const Engineer = require("./lib/Engineer")
 const Manager = require("./lib/Manager")
 const questions = require("./lib/questions")
 
-const test = true;
+const test = false;
 
 // use inquire to ask general employee questions
 const askGenEmpl = () => {
@@ -43,13 +43,19 @@ const askAgain = () => {
 async function init() {
   if (test) console.log("started init:");
   // array in which to store employees
-  const teamList = [];
+  const engList = [];
+  const intList = [];
+  const manList = [];
+
+  const teamList = [manList,engList,intList];
   // const ansRoleEmpl;
   let employee;
 
   // will need to wrap this in a loop for n-employees
   try {
     let again = true;
+    let id = 0;
+
     while (again) {
       // build employee information (i would put this in the Employee object)
       const ansGenEmpl = await askGenEmpl();
@@ -57,28 +63,30 @@ async function init() {
       if (test) console.log("try got general:", ansGenEmpl);
 
       const email = `${ansGenEmpl.first_name[0]}${ansGenEmpl.last_name}@company.com`;
-      const fullName = `${ansGenEmpl.first_name} ${ansGenEmpl.last_name}`;
+      const fullName = `${ansGenEmpl.last_name}, ${ansGenEmpl.first_name}`;
       // need id generator
-      const id = 123;
+      id += 1;
 
       switch (ansGenEmpl.role) {
         case 'Intern':
           ansRoleEmpl = await askIntEmpl();
           employee = new Intern (fullName,id,email,ansRoleEmpl.school);
+          intList.push(employee);
           break;
         case 'Engineer':
           ansRoleEmpl = await askEngEmpl();
           employee = new Engineer (fullName,id,email,ansRoleEmpl.github);
+          engList.push(employee);
           break;
         case 'Manager':
-          ansRoleEmpl = await askManEmpl();``
+          ansRoleEmpl = await askManEmpl();
           employee = new Manager (fullName,id,email,ansRoleEmpl.office);
+          manList.push(employee);
           break;
       }
 
       if (test) console.log(employee);
       console.log(`Added new employee ${employee.getName()} to team!`);
-      teamList.push(employee);
 
       // can i combine this into one statement
       const askResult = await askAgain();
@@ -86,11 +94,20 @@ async function init() {
 
       if (test) console.log("again",again);
     }
-    // const page = generateHTML(team);
+
+    // sort lists
+    manList.sort((a, b) => (a.last_name > b.last_name) ? 1 : -1);
+    engList.sort((a, b) => (a.last_name > b.last_name) ? 1 : -1);
+    intList.sort((a, b) => (a.last_name > b.last_name) ? 1 : -1);
+
+    if (test) { console.log(teamList); }
+    const file = generateHTML(teamList);
+    if (true) { console.log(file); }
+    // write to file
+
   } catch (error) {
     console.log(`There was a problem ${error}`);
   }
-  console.log("Team contains",teamList);
 }
 
 init();
