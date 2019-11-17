@@ -1,47 +1,3 @@
-const generateCard = require("./generateCardHTML");
-
-module.exports = function generateHTML(team) {
-
-  // dynamically build team from list provided
-  let teamListHtml = ""; 
-
-  // console.log("team",team);
-  // console.log("team.lenght",team.length);
-
-  // loop though list of teams
-  for (let i = 0; i < team.length; i += 1) {
-  // console.log(`team[${i}]`,team[i]);
-  // console.log(`team[${i}].length`,team[i].length);
-
-    // loop through each team
-    let isNewRow = true;
-    for (let j = 0; j < team[i].length; j += 1) {
-      const empl = team[i][j];
-      console.log("index j",(team[i].length-1),j);
-
-      // console.log("empl",empl);
-      if (isNewRow) { 
-        teamListHtml += `<div class="row">`;
-      }
-      teamListHtml += `<div class="col-sm-6">`;
-      teamListHtml += generateCard(empl);
-
-      // checks for end of row closes col and row else closes col
-      if ( !isNewRow || j === (team[i].length-1) ) { 
-        console.log("adding end of row div");
-        teamListHtml += `</div>`; 
-        isNewRow = true;
-      } else {
-        isNewRow = false;
-      }
-
-      teamListHtml += `</div>`; 
-    }
-  }
-
-  // console.log(teamListHtml);
-  // HTML 
-  const HTML = `
   <!DOCTYPE html>
   <html lang="en">
      <head>
@@ -80,7 +36,7 @@ module.exports = function generateHTML(team) {
            font-family: 'Open Sans Condensed', sans-serif;
            }
            main {
-           background-color: #E9EDEE;
+           background-color: #FECFC7;
            height: auto;
            padding-top: 30px;
            }
@@ -231,7 +187,43 @@ module.exports = function generateHTML(team) {
   <!--end photo-header-->
 </div>
   <main class="container">
-  ${teamListHtml}
+  <div class="row"><div class="col-sm-6">
+  <div class="card">
+    <div class="card-header-Engineer">
+      Engineer
+    </div>
+    <div class="card-body">
+      <h5 class="card-title"> b, b</h5>
+      <p> bb@company.com</p>
+      <p> Github account: b</p>
+      <div class="text-muted"> Employee Id: 2 </div>
+    </div>
+  </div>
+  </div><div class="col-sm-6">
+  <div class="card">
+    <div class="card-header-Engineer">
+      Engineer
+    </div>
+    <div class="card-body">
+      <h5 class="card-title"> a, a</h5>
+      <p> aa@company.com</p>
+      <p> Github account: a</p>
+      <div class="text-muted"> Employee Id: 1 </div>
+    </div>
+  </div>
+  </div></div><div class="row"><div class="col-sm-6">
+  <div class="card">
+    <div class="card-header-Intern">
+      Intern
+    </div>
+    <div class="card-body">
+      <h5 class="card-title"> c, c</h5>
+      <p> cc@company.com</p>
+      <p> School:  c</p>
+      <div class="text-muted"> Employee Id: 3 </div>
+    </div>
+  </div>
+  </div></div>
   </main>
 <footer>
 <div style="height: 300px">
@@ -240,7 +232,4 @@ module.exports = function generateHTML(team) {
 
 </body>
 </html>
-`;
 
-  return HTML;
-}
