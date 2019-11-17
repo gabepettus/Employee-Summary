@@ -1,6 +1,7 @@
 const inquirer = require("inquirer");
 // const fs = require("fs");
 const generateHTML = require("./lib/generateHTML");
+const write2File = require("./lib/write2File");
 
 // load specific employee type classes
 const Intern = require("./lib/Intern")
@@ -60,11 +61,12 @@ async function init() {
       // build employee information (i would put this in the Employee object)
       const ansGenEmpl = await askGenEmpl();
       // maybe these should be in the employee class?
-      if (test) console.log("try got general:", ansGenEmpl);
 
+      // assemble fullname of employee
       const email = `${ansGenEmpl.first_name[0]}${ansGenEmpl.last_name}@company.com`;
       const fullName = `${ansGenEmpl.last_name}, ${ansGenEmpl.first_name}`;
-      // need id generator
+
+      // increment id for next employee
       id += 1;
 
       switch (ansGenEmpl.role) {
@@ -91,23 +93,40 @@ async function init() {
       // can i combine this into one statement
       const askResult = await askAgain();
       again = askResult.again;
-
-      if (test) console.log("again",again);
     }
 
-    // sort lists
-    manList.sort((a, b) => (a.last_name > b.last_name) ? 1 : -1);
-    engList.sort((a, b) => (a.last_name > b.last_name) ? 1 : -1);
-    intList.sort((a, b) => (a.last_name > b.last_name) ? 1 : -1);
+    // sort lists 
+    console.log("before",engList);
+    manList.sort(nameCompare);
+    engList.sort(nameCompare);
+    intList.sort(nameCompare);
+    console.log("after",engList);
 
-    if (test) { console.log(teamList); }
     const file = generateHTML(teamList);
-    if (true) { console.log(file); }
+
     // write to file
+
+    const filename = "./index.html";
+    write2File(filename,file);
 
   } catch (error) {
     console.log(`There was a problem ${error}`);
   }
+}
+
+function nameCompare(a, b) {
+  // Use toUpperCase() to ignore character casing
+  console.log(`a ${a} - b ${b}`)
+  const nameA = a.getName().toUpperCase();
+  const nameB = b.getName().toUpperCase();
+
+  let comparison = 0;
+  if (nameA > nameB) {
+    comparison = 1;
+  } else if (nameA < nameB) {
+    comparison = -1;
+  }
+  return comparison;
 }
 
 init();
