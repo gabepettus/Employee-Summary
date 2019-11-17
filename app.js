@@ -96,11 +96,9 @@ async function init() {
     }
 
     // sort lists 
-    console.log("before",engList);
     manList.sort(nameCompare);
     engList.sort(nameCompare);
     intList.sort(nameCompare);
-    console.log("after",engList);
 
     const file = generateHTML(teamList);
 
@@ -116,7 +114,6 @@ async function init() {
 
 function nameCompare(a, b) {
   // Use toUpperCase() to ignore character casing
-  console.log(`a ${a} - b ${b}`)
   const nameA = a.getName().toUpperCase();
   const nameB = b.getName().toUpperCase();
 
