@@ -1,13 +1,14 @@
+// const inquirer = require("inquirer");
+
 const inquirer = require("inquirer");
-// const fs = require("fs");
 const generateHTML = require("./lib/generateHTML");
 const write2File = require("./lib/write2File");
 
 // load specific employee type classes
-const Intern = require("./lib/Intern")
-const Engineer = require("./lib/Engineer")
-const Manager = require("./lib/Manager")
-const questions = require("./lib/questions")
+const Intern = require("./lib/Intern");
+const Engineer = require("./lib/Engineer");
+const Manager = require("./lib/Manager");
+const questions = require("./lib/questions");
 
 const test = false;
 
@@ -110,7 +111,7 @@ async function init() {
   } catch (error) {
     console.log(`There was a problem ${error}`);
   }
-}
+};
 
 function nameCompare(a, b) {
   // Use toUpperCase() to ignore character casing
@@ -124,6 +125,6 @@ function nameCompare(a, b) {
     comparison = -1;
   }
   return comparison;
-}
+};
 
 init();
