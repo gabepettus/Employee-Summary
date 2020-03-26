@@ -1,6 +1,12 @@
 # Team-Builder
 Software team profiling tool
 
+## To see in action:
+  1. clone respository "git clone git@github.com:gabepettus/Team-Builder.git" to pull the code
+  2. run "npm i" to install the library dependencies
+  3. run "node ./app.js" to see the AWESOME CLI
+  4. use your favorite browser (not IE not tested) to view your roster
+    
 ## Goal:
 Build a software engineering team generator command line application. The application will prompt the user for information about the team manager and then information about the team members. The user can input any number of team members, and they may be a mix of engineers and interns. This assignment must also pass all unit tests. When the user has completed building the team, the application will create an HTML file that displays a nicely formatted team roster based on the information provided by the user.
 
